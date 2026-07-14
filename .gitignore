@@ -1,0 +1,21 @@
+# Environment Variables
+.env
+
+# Virtual Environment
+.venv/
+
+# VS Code Settings
+.vscode/
+
+# Vector Store
+vector_store/
+
+# Flow Charts
+flow charts/
+
+# Python Cache Files
+__pycache__/
+*.pyc
+
+# Jupyter Notebooks Checkpoints
+.ipynb_checkpoints/
