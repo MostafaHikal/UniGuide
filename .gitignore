@@ -10,9 +10,6 @@
 # Vector Store
 vector_store/
 
-# Flow Charts
-flow charts/
-
 # Python Cache Files
 __pycache__/
 *.pyc
