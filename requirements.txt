@@ -1,0 +1,27 @@
+# UI
+gradio
+
+# Environment variables
+python-dotenv
+
+# LangChain core + integrations
+langchain
+langchain-core
+langchain-community
+langchain-groq
+langchain-text-splitters
+
+# Groq official client (used for Vision model in ingestion.py)
+groq
+
+# Embeddings + Vector store
+sentence-transformers
+faiss-cpu
+
+# Fuzzy matching for structured retrieval (retrieval.py)
+rapidfuzz
+
+# PDF -> images + OCR (ingestion.py)
+pdf2image
+pytesseract
+Pillow
