@@ -2,6 +2,8 @@
 
 An NLP-powered university assistant chatbot designed to help students answer questions about their college, lecture schedules, and exam timetables using a hybrid retrieval architecture (RAG + Structured Data Retrieval).
 
+> ⚠️ **Note:** This is a personal learning project built to practice RAG, retrieval pipelines, and LLM integration. It is **not a production-ready or professional system**, and it hasn't been tested or hardened for real-world deployment.
+
 ---
 
 ## Project Overview
@@ -316,6 +318,12 @@ Potential enhancements include:
 - Context Compression.
 - Parent-Child Retrieval.
 - Conversation Memory.
+
+---
+
+# Disclaimer
+
+This project was built for **educational and learning purposes** as part of exploring RAG, retrieval systems, and LLM-based applications. It is **not** a professional or production-grade product, and some parts (e.g. hardcoded local paths, error handling, conversation memory) still need work before it could be used in a real environment.
 
 ---
 
