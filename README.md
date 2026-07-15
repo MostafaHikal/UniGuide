@@ -6,7 +6,7 @@ An NLP-powered university assistant chatbot designed to help students answer que
 
 ## Project Overview
 
-UniGuide is an intelligent chatbot that understands student questions and dynamically routes them to the appropriate retrieval pipeline.
+UniGuide is an intelligent chatbot that lets students select the type of question they're asking, and routes it to the appropriate retrieval pipeline.
 
 The system supports:
 
@@ -23,7 +23,7 @@ The system supports:
 ## Features
 
 - Hybrid Retrieval Architecture.
-- Router-based query classification.
+- User-selected query mode with dedicated retrieval pipelines.
 - FAISS Vector Database.
 - Structured JSON Database.
 - OCR + Groq Vision ingestion pipeline.
@@ -52,7 +52,7 @@ The chatbot processes questions through multiple stages.
 The workflow is:
 
 1. Receive the user's question.
-2. Classify the query.
+2. User selects the query mode (Schedules/Exams or College Info) from the interface.
 3. Route it to the appropriate retrieval pipeline.
 4. Retrieve relevant information.
 5. Generate the response.
@@ -62,7 +62,7 @@ The workflow is:
 
 # Router Decision Flow
 
-The Router is responsible for selecting the correct pipeline.
+The Router receives the query mode selected by the user in the interface and directs the request to the corresponding pipeline.
 
 ![Router & Mode Flowchart](assets/Router%20&%20Mode%20Flowchart.png)
 
