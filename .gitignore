@@ -16,3 +16,6 @@ __pycache__/
 
 # Jupyter Notebooks Checkpoints
 .ipynb_checkpoints/
+
+# VS Code temporary files
+tempCodeRunnerFile.py
