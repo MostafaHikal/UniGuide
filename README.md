@@ -1,52 +1,258 @@
-# UniGuide - AI-Powered University Assistant
+# UniGuide
 
-## Overview
+An NLP-powered university assistant chatbot designed to help students answer questions about their college, lecture schedules, and exam timetables using a hybrid retrieval architecture (RAG + Structured Data Retrieval).
 
-UniGuide is an AI-powered university assistant chatbot designed to help students access academic information quickly and efficiently. The project combines Retrieval-Augmented Generation (RAG), Hybrid Retrieval techniques, and Large Language Models (LLMs) to answer university-related questions in Arabic.
+---
 
-The chatbot can provide information about:
+## Project Overview
 
-* College regulations and academic information.
-* Lecture and exam schedules.
-* Student-related inquiries.
-* Questions based on university documents and structured data.
+UniGuide is an intelligent chatbot that understands student questions and dynamically routes them to the appropriate retrieval pipeline.
+
+The system supports:
+
+- College information questions.
+- Lecture schedules.
+- Exam timetables.
+- Retrieval-Augmented Generation (RAG) for PDF documents.
+- Structured JSON retrieval for tabular data.
+- OCR and Vision-based ingestion pipelines.
+- Arabic and multilingual semantic search.
 
 ---
 
 ## Features
 
-* Arabic language support.
-* Retrieval-Augmented Generation (RAG).
-* Hybrid Retrieval using FAISS and BM25.
-* Semantic and lexical search capabilities.
-* Intelligent query routing.
-* Structured data retrieval from JSON files.
-* Support for academic PDFs and exam schedules.
-* Modular and scalable architecture.
+- Hybrid Retrieval Architecture.
+- Router-based query classification.
+- FAISS Vector Database.
+- Structured JSON Database.
+- OCR + Groq Vision ingestion pipeline.
+- Semantic document search.
+- Arabic query support.
+- Modular Python architecture.
 
 ---
 
-## Technologies Used
+## System Architecture
 
-* Python
-* LangChain
-* Groq API
-* FAISS Vector Store
-* BM25
-* HuggingFace Embeddings
-* Large Language Models (LLMs)
+The following diagram shows the high-level architecture of UniGuide.
+
+![Full System Architecture](assets/Full%20System%20Architecture.png)
+
+The user interacts with the Gradio UI, which sends the question to the Chat Pipeline. The Router determines the query type and forwards it to the Retrieval Module. Depending on the query, the system retrieves information from either the FAISS Vector Database or the JSON database before generating the final response using Groq LLM.
 
 ---
 
-## Project Structure
+# How UniGuide Works
+
+The chatbot processes questions through multiple stages.
+
+![Query Processing Flow](assets/Query%20Processing%20Flow.png)
+
+The workflow is:
+
+1. Receive the user's question.
+2. Classify the query.
+3. Route it to the appropriate retrieval pipeline.
+4. Retrieve relevant information.
+5. Generate the response.
+6. Return the final answer.
+
+---
+
+# Router Decision Flow
+
+The Router is responsible for selecting the correct pipeline.
+
+![Router & Mode Flowchart](assets/Router%20&%20Mode%20Flowchart.png)
+
+The Router supports two modes:
+
+### Structured Retrieval
+
+Used for:
+
+- Exam schedules.
+- Lecture schedules.
+- Tabular information.
+
+Pipeline:
 
 ```
-UniGuide/
+Question
+↓
+
+Extract Query
+↓
+
+Search JSON Database
+↓
+
+Generate Response
+```
+
+---
+
+### RAG Retrieval
+
+Used for:
+
+- College information.
+- PDF documents.
+- General university-related questions.
+
+Pipeline:
+
+```
+Question
+↓
+
+Search FAISS Vector Store
+↓
+
+Retrieve Context
+↓
+
+Generate Response
+```
+
+---
+
+# System Context
+
+The following diagram illustrates how UniGuide interacts with its databases.
+
+![System Context Diagram](assets/System%20Context%20Diagram.png)
+
+UniGuide communicates with:
+
+- JSON Database for structured data.
+- FAISS Vector Database for semantic document retrieval.
+- User interface for question handling.
+
+---
+
+# Data Ingestion Pipeline
+
+UniGuide uses two separate ingestion pipelines.
+
+![Data Ingestion Pipeline](assets/Data%20Ingestion%20Pipeline.png)
+
+### Image Pipeline
+
+Schedule images are processed using:
+
+- Groq Vision Model.
+- JSON extraction.
+- Record normalization.
+- JSON storage.
+
+The extracted schedules are stored inside:
+
+```
+tables.json
+```
+
+---
+
+### PDF Pipeline
+
+PDF documents are processed using:
+
+- OCR (Tesseract).
+- Text normalization.
+- Document chunking.
+- Embedding generation.
+- FAISS indexing.
+
+The resulting embeddings are stored inside:
+
+```
+vector_store/
+```
+
+---
+
+# Module Dependencies
+
+The following diagram illustrates the relationships between the project's modules.
+
+![Module Dependency](assets/Module%20Dependency.png)
+
+Main modules include:
+
+- main.py
+- router.py
+- retrieval.py
+- responder.py
+- ingestion.py
+- normalizer.py
+- config.py
+- prompts.py
+
+This modular design makes the system easier to maintain and extend.
+
+---
+
+# Package Structure
+
+The package-level architecture is shown below.
+
+![PackageClass Structure Diagram](assets/PackageClass%20Structure%20Diagram.png)
+
+The project separates:
+
+- Routing logic.
+- Retrieval logic.
+- Response generation.
+- Ingestion pipeline.
+- Configuration management.
+- Prompt engineering.
+
+---
+
+# Query Handling Sequence
+
+The following sequence diagram describes how a user query travels through the system.
+
+![Sequence Diagram – Query Handling](assets/Sequence%20Diagram%20%E2%80%93%20Query%20Handling.png)
+
+Sequence:
+
+1. User submits a question.
+2. UI sends the query to the Chat Pipeline.
+3. Router determines the query type.
+4. Retrieval module processes the request.
+5. The appropriate database is queried.
+6. Relevant context is retrieved.
+7. Response Generator creates the final answer.
+8. The answer is returned to the user.
+
+---
+
+# Technologies Used
+
+| Component | Technology |
+|----------|----------|
+| LLM | Groq |
+| Vision Model | Llama 4 Scout |
+| Embeddings | paraphrase-multilingual-MiniLM-L12-v2 |
+| Vector Store | FAISS |
+| OCR | Tesseract OCR |
+| UI | Gradio |
+| Language | Python |
+| Retrieval | RAG + Structured Retrieval |
+
+---
+
+# Project Structure
+
+```
+UniGuide
 │
 ├── app/
 │   ├── config.py
 │   ├── ingestion.py
-│   ├── learn.py
 │   ├── main.py
 │   ├── normalizer.py
 │   ├── prompts.py
@@ -55,10 +261,9 @@ UniGuide/
 │   ├── router.py
 │   └── ui.py
 │
+├── assets/
 ├── data/
-│   ├── College/
-│   ├── Tables/
-│   └── tables.json
+├── vector_store/
 │
 ├── .env.example
 ├── .gitignore
@@ -67,94 +272,56 @@ UniGuide/
 
 ---
 
-## How It Works
+# Running the Project
 
-1. The user submits a question in Arabic.
-2. The Router determines the type of query.
-3. Structured questions are answered using JSON data.
-4. Document-based questions are processed using RAG.
-5. Hybrid Retrieval combines:
-
-   * FAISS (semantic search)
-   * BM25 (keyword-based search)
-6. The selected context is sent to the LLM to generate an answer.
-
----
-
-## Installation
-
-Clone the repository:
+1. Clone the repository.
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/UniGuide.git
+git clone https://github.com/MostafaHikal/UniGuide.git
 ```
 
-Move into the project directory:
-
-```bash
-cd UniGuide
-```
-
-Create and activate a virtual environment:
-
-```bash
-python -m venv .venv
-```
-
-Install the required dependencies:
+2. Install the required dependencies.
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
-## Environment Variables
-
-Create a `.env` file based on `.env.example` and add your API key.
-
-Example:
+3. Create a `.env` file.
 
 ```env
-GROQ_API_KEY=YOUR_GROQ_API_KEY
+GROQ_API_KEY=your_api_key
+
 MODEL_NAME=llama-3.1-8b-instant
+
 VISION_MODEL_NAME=meta-llama/llama-4-scout-17b-16e-instruct
+
 EMBEDDING_MODEL=paraphrase-multilingual-MiniLM-L12-v2
 ```
 
----
-
-## Running the Project
-
-Run the application using:
+4. Run the application.
 
 ```bash
-python app/main.py
+python app/ui.py
 ```
 
 ---
 
-## Example Questions
+# Future Improvements
 
-* What exams do I have this week?
-* What is the grading system in the college?
-* What are the university regulations?
-* What is my lecture schedule?
-* Tell me about the Intelligent Systems program.
+Potential enhancements include:
 
----
-
-## Future Improvements
-
-* Multi-query retrieval.
-* Reranking techniques.
-* Context compression.
-* Conversation memory.
-* Web interface deployment.
-* Support for multiple universities.
+- Hybrid Search (BM25 + FAISS).
+- Multi-query Retrieval.
+- Re-ranking techniques.
+- Context Compression.
+- Parent-Child Retrieval.
+- Conversation Memory.
 
 ---
 
-## License
+# Author
 
-This project is intended for educational and research purposes.
+**Mostafa Heikal**
+
+Faculty of Computers and Information  
+Machine Learning & NLP Enthusiast
